@@ -14,13 +14,16 @@ namespace Numbers
             Console.WriteLine("I'm thinking of a number between 1 and 100. Try and guess it!");
             Console.WriteLine();
             var guess = 0;
-            while(guess != 37)
+            var random = new Random();
+            var correctGuess = random.Next(1, 101);
+
+            while(guess != correctGuess)
             {
                 Console.Write("What's your guess? ");
                 int.TryParse(Console.ReadLine(), out guess);
-                if (guess != 37)
+                if (guess != correctGuess)
                 {
-                    if (guess < 37)
+                    if (guess < correctGuess)
                     {
                         Console.WriteLine("Higher...");
                     }
@@ -30,7 +33,7 @@ namespace Numbers
                     }
                 }
             }
-            Console.WriteLine("You win! The correct number was 37");
+            Console.WriteLine($"You win! The correct number was {correctGuess}");
             Console.ReadKey();
         }
     }
