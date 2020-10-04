@@ -1,2 +1,2 @@
 # Numbers
- A numbers game
+ A simple "Guess the number" game
