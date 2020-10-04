@@ -16,11 +16,14 @@ namespace Numbers
             var guess = 0;
             var random = new Random();
             var correctGuess = random.Next(1, 101);
+            var guessCount = 0;
 
             while(guess != correctGuess)
             {
                 Console.Write("What's your guess? ");
                 int.TryParse(Console.ReadLine(), out guess);
+                guessCount++;
+
                 if (guess != correctGuess)
                 {
                     if (guess < correctGuess)
@@ -34,6 +37,8 @@ namespace Numbers
                 }
             }
             Console.WriteLine($"You win! The correct number was {correctGuess}");
+            Console.WriteLine($"It took you {guessCount} guesses to win. Great game!");
+            Console.Write("Press the any key to exit :)");
             Console.ReadKey();
         }
     }
