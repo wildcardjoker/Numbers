@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Numbers
+namespace NumbersCore
 {
     class Program
     {
@@ -18,7 +14,7 @@ namespace Numbers
             var correctGuess = random.Next(1, 101);
             var guessCount = 0;
 
-            while(guess != correctGuess)
+            while (guess != correctGuess)
             {
                 Console.Write("What's your guess? ");
                 int.TryParse(Console.ReadLine(), out guess);
