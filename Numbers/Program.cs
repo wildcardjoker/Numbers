@@ -20,7 +20,7 @@ namespace Numbers
             var countMessage = "It took you {0} guesses to win. Great game!";
             var correctMessage = "The correct number was {0}.";
 
-            while (guess != correctGuess && guess != 0)
+            while (guess != correctGuess)
             {
                 Console.Write("What's your guess? ");
                 int.TryParse(Console.ReadLine(), out guess);
