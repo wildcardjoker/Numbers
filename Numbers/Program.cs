@@ -1,19 +1,19 @@
 ﻿using System;
+using System.Drawing;
+using Console = Colorful.Console;
 
 namespace Numbers
 {
-    using System;
-    using System.Drawing;
-    using Console = Colorful.Console;
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteAscii("Guess the number",Color.Coral);
+            Console.WriteAscii("Guess the number", Color.Coral);
             Console.WriteLine("Shall we play a game?");
             Console.WriteLine("I'm thinking of a number between 1 and 100. Try and guess it!");
+            Console.WriteLine("If you want to quit, just press 0.");
             Console.WriteLine();
-            var guess = 0;
+            var guess = -1;
             var random = new Random();
             var correctGuess = random.Next(1, 101);
             var guessCount = 0;
@@ -26,14 +26,20 @@ namespace Numbers
                 int.TryParse(Console.ReadLine(), out guess);
                 guessCount++;
 
-                if (guess != correctGuess)
+                if (guess == 0)
                 {
-                    Console.WriteLine(guess < correctGuess ? "Higher..." : "Lower...", guess<correctGuess? Color.Gold : Color.LightSkyBlue);
+                    Console.WriteLine("The game is forfeit :(");
+                    return;
                 }
+
+                if (guess != correctGuess)
+                    Console.WriteLine(guess < correctGuess ? "Higher..." : "Lower...",
+                        guess < correctGuess ? Color.Gold : Color.LightSkyBlue);
             }
+
             Console.WriteAscii($"{correctGuess} - You win!", Color.SpringGreen);
             Console.WriteLineFormatted(correctMessage, Color.CornflowerBlue, Color.LawnGreen, correctGuess);
-            Console.WriteLineFormatted(countMessage, Color.Aqua,Color.Gray,guessCount);
+            Console.WriteLineFormatted(countMessage, Color.Aqua, Color.Gray, guessCount);
             Console.ResetColor();
 
             Console.Write("Press the any key to exit :)");
