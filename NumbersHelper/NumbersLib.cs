@@ -26,6 +26,12 @@ public class NumbersLib
     public bool CorrectGuess { get; private set; }
     public bool Forfeit { get; private set; }
 
+    public GuessResult MakeGuess(string guess)
+    {
+        _ = int.TryParse(guess, out var guessResult);
+        return MakeGuess(guessResult);
+    }
+
     /// <summary>Checks the user's guess against the secret number.</summary>
     /// <param name="guess">The current number being guessed.</param>
     /// <returns>
@@ -58,9 +64,9 @@ public class NumbersLib
             return GuessResult.CorrectGuess;
         }
 
-        if (CurrentGuess <= ThresholdLow) return GuessResult.PreviousGuessLower;
+        if (CurrentGuess < ThresholdLow) return GuessResult.PreviousGuessLower;
 
-        if (CurrentGuess >= ThresholdHigh) return GuessResult.PreviousGuessHigher;
+        if (CurrentGuess > ThresholdHigh) return GuessResult.PreviousGuessHigher;
 
         if (CurrentGuess < SecretNumber)
         {
