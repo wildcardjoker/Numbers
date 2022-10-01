@@ -1,57 +1,72 @@
 ﻿using System;
 using System.Drawing;
+using NumbersHelper;
 using Console = Colorful.Console;
 
-namespace Numbers
+namespace Numbers;
+
+internal class Program
 {
-    internal class Program
+    private const string CountMessage = "It took you {0} guesses to win. Great game!";
+    private const string CorrectMessage = "The correct number was {0}.";
+    private const string RangeMessage = "You should guess a number between {0} and {1}";
+
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
+        var game = new NumbersLib();
+        Console.WriteAscii("Guess the number", Color.Coral);
+        Console.WriteLine("Shall we play a game?");
+        Console.WriteLine(
+            $"I'm thinking of a number between {game.MinimumNumber} and {game.MaximumNumber}. Try and guess it!");
+        Console.WriteLine("If you want to quit, just press 0.");
+        Console.WriteLine();
+
+        while (!game.CorrectGuess && !game.Forfeit)
         {
-            Console.WriteAscii("Guess the number", Color.Coral);
-            Console.WriteLine("Shall we play a game?");
-            Console.WriteLine("I'm thinking of a number between 1 and 100. Try and guess it!");
-            Console.WriteLine("If you want to quit, just press 0.");
-            Console.WriteLine();
-            var guess = -1;
-            var random = new Random();
-            var correctGuess = random.Next(1, 101);
-            var guessCount = 0;
-            var countMessage = "It took you {0} guesses to win. Great game!";
-            var correctMessage = "The correct number was {0}.";
-            var rangeMessage = "You should guess a number between {0} and {1}";
-            var min = 1;
-            var max = 100;
-
-            while (guess != correctGuess)
+            RequestGuessWithinCurrentRange(game);
+            Console.Write("What's your guess? ");
+            // If user doesn't enter a valid number, guess == 0 and the user forfeits
+            _ = int.TryParse(Console.ReadLine(), out var guess);
+            var result = game.MakeGuess(guess);
+            switch (result)
             {
-                Console.WriteLineFormatted(rangeMessage, Color.Fuchsia, Color.Gainsboro, min, max);
-                Console.Write("What's your guess? ");
-                int.TryParse(Console.ReadLine(), out guess);
-                guessCount++;
-
-                if (guess == 0)
-                {
+                case GuessResult.Higher:
+                    Console.WriteLine("Higher...", Color.Gold);
+                    break;
+                case GuessResult.Lower:
+                    Console.WriteLine("Lower...", Color.LightSkyBlue);
+                    break;
+                case GuessResult.Forfeit:
                     Console.WriteLine("The game is forfeit :(");
-                    return;
-                }
-
-                if (guess != correctGuess)
-                    Console.WriteLine(guess < correctGuess ? "Higher..." : "Lower...",
-                        guess < correctGuess ? Color.Gold : Color.LightSkyBlue);
-                if (guess<correctGuess)
-                {
-                    min = guess;
-                }
-                else
-                {
-                    max = guess;
-                }
+                    break;
+                case GuessResult.CorrectGuess:
+                    DisplayWinnerMessage(game);
+                    break;
+                case GuessResult.PreviousGuess:
+                    Console.WriteLine("You've already guessed this number. Try again...", Color.DarkOrange);
+                    break;
+                case GuessResult.PreviousGuessHigher:
+                    Console.WriteLine($"You already know the number is lower than {game.ThresholdHigh}...", Color.DarkOrange);
+                    break;
+                case GuessResult.PreviousGuessLower:
+                    Console.WriteLine($"You already know that the number is lower than {game.ThresholdLow}...", Color.DarkOrange);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-            Console.WriteAscii($"{correctGuess} - You win!", Color.SpringGreen);
-            Console.WriteLineFormatted(correctMessage, Color.CornflowerBlue, Color.LawnGreen, correctGuess);
-            Console.WriteLineFormatted(countMessage, Color.Aqua, Color.Gray, guessCount);
         }
+    }
+
+    private static void RequestGuessWithinCurrentRange(NumbersLib game)
+    {
+        Console.WriteLineFormatted(RangeMessage, Color.Fuchsia, Color.Gainsboro, game.ThresholdLow,
+            game.ThresholdHigh);
+    }
+
+    private static void DisplayWinnerMessage(NumbersLib game)
+    {
+        Console.WriteAscii($"{game.CurrentGuess} - You win!", Color.SpringGreen);
+        Console.WriteLineFormatted(CorrectMessage, Color.CornflowerBlue, Color.LawnGreen, game.CurrentGuess);
+        Console.WriteLineFormatted(CountMessage, Color.Aqua, Color.Gray, game.NumberOfGuesses);
     }
 }
