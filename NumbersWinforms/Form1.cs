@@ -1,6 +1,8 @@
-using NumbersHelper;
 // ReSharper disable once RedundantUsingDirective
+
 using Humanizer;
+using NumbersHelper;
+
 namespace NumbersWinforms;
 
 public partial class Form1 : Form
@@ -22,38 +24,45 @@ public partial class Form1 : Form
     private void MakeGuess()
     {
         var result = _game.MakeGuess(txtGuess.Text);
+        var resultMessage = string.Empty;
         switch (result)
         {
             case GuessResult.CorrectGuess:
                 DisplayWinBanner();
                 break;
             case GuessResult.Lower:
-                DisplayResult("Lower...");
+                resultMessage = "Lower...";
                 break;
             case GuessResult.Higher:
-                DisplayResult("Higher...");
+                resultMessage = "Higher...";
                 break;
             case GuessResult.PreviousGuess:
-                DisplayResult($"Same as previous guess. {StillCountsAsAGuess}!");
+                resultMessage = $"Same as previous guess. {StillCountsAsAGuess}!";
                 break;
             case GuessResult.PreviousGuessHigher:
-                DisplayResult($"You've already guessed lower than {_game.CurrentGuess}. {StillCountsAsAGuess}.");
+                resultMessage = $"You've already guessed lower than {_game.CurrentGuess}. {StillCountsAsAGuess}.";
                 break;
             case GuessResult.PreviousGuessLower:
-                DisplayResult($"You've already guessed higher than {_game.CurrentGuess}. {StillCountsAsAGuess}.");
+                resultMessage = $"You've already guessed higher than {_game.CurrentGuess}. {StillCountsAsAGuess}.";
                 break;
             case GuessResult.Forfeit:
-                DisplayResult("You forfeit.");
+                resultMessage = "You forfeit.";
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
         }
-    }
 
-    private void DisplayResult(string s)
-    {
         DisplayRangeDetails();
-        lblResult.Text = s;
+        lblResult.Text = resultMessage;
+        lblResult.ForeColor = result switch
+        {
+            GuessResult.Higher => Color.Red,
+            GuessResult.Lower => Color.Green,
+            GuessResult.PreviousGuessHigher => Color.DarkOrange,
+            GuessResult.PreviousGuessLower => Color.DarkOrange,
+            _ => Color.Black
+        };
+
         lblResult.Visible = true;
     }
 
