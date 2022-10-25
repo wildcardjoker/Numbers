@@ -48,7 +48,7 @@ public partial class Form1 : Form
                 break;
             case GuessResult.Forfeit:
                 resultMessage = $"You forfeit. {_game.SecretNumber} was the right answer!";
-                showPlayQuitButtons();
+                setPlayQuitButtonVisibility(true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -80,7 +80,7 @@ public partial class Form1 : Form
         lblResult.Visible = false;
         lblGuessCount.Visible = true;
         lblWinBanner.Visible = true;
-        showPlayQuitButtons();
+        setPlayQuitButtonVisibility(true);
     }
 
     private void btnForfeit_Click(object sender, EventArgs e)
@@ -102,7 +102,7 @@ public partial class Form1 : Form
         lblWinBanner.Visible = false;
         lblGuessCount.Visible = false;
         txtGuess.Text = string.Empty;
-        hidePlayQuitButtons();
+        setPlayQuitButtonVisibility(false);
         btnForfeit.Enabled = false;
     }
 
@@ -117,13 +117,9 @@ public partial class Form1 : Form
             btnForfeit.Enabled = true;
     }
 
-    private void hidePlayQuitButtons(){
-        btnPlayAgain.Visible = false;
-        btnQuit.Visible = false;
-    }
-
-    private void showPlayQuitButtons(){
-        btnPlayAgain.Visible = true;
-        btnQuit.Visible = true;
+    private void setPlayQuitButtonVisibility(bool isVisible)
+    {
+        btnPlayAgain.Visible = isVisible;
+        btnQuit.Visible = isVisible;
     }
 }
