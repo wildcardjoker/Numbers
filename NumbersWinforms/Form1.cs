@@ -88,7 +88,8 @@ public partial class Form1 : Form
 
     private void DisplayRangeDetails()
     {
-        lblRange.Text = $"Please guess a number between {_game.ThresholdLow} and {_game.ThresholdHigh}";
+        lblRange.Visible = true;
+        lblRange.Text    = $"Please guess a number between {_game.ThresholdLow} and {_game.ThresholdHigh}";
     }
 
     private void DisplayWinBanner()
@@ -166,8 +167,10 @@ public partial class Form1 : Form
 
     private void SetRangeFieldsEnabled(bool isEnabled)
     {
-        txtMax.Enabled = isEnabled;
-        txtMin.Enabled = isEnabled;
+        txtMax.Enabled        = isEnabled;
+        txtMin.Enabled        = isEnabled;
+        btnStartGame.Enabled  = isEnabled;
+        cboDifficulty.Enabled = isEnabled;
     }
 
     private void SetupGame()

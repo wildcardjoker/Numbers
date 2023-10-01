@@ -59,6 +59,7 @@
             lblRange.Size = new Size(104, 15);
             lblRange.TabIndex = 0;
             lblRange.Text = "Range of numbers";
+            lblRange.Visible = false;
             // 
             // label2
             // 
@@ -190,7 +191,7 @@
             // 
             // btnStartGame
             // 
-            btnStartGame.Location = new Point(305, 58);
+            btnStartGame.Location = new Point(305, 26);
             btnStartGame.Name = "btnStartGame";
             btnStartGame.Size = new Size(75, 23);
             btnStartGame.TabIndex = 15;
