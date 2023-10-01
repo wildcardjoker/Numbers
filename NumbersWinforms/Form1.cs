@@ -8,6 +8,9 @@ using NumbersHelper;
 public partial class Form1 : Form
 {
     #region Constants
+    private const int DefaultMax = NumbersLib.DefaultMax;
+    private const int DefaultMin = NumbersLib.DefaultMin;
+
     private const string StillCountsAsAGuess = "This still counts as a guess";
     #endregion
 
@@ -43,6 +46,25 @@ public partial class Form1 : Form
     private void btnQuit_Click(object sender, EventArgs e)
     {
         Close();
+    }
+
+    private void button1_Click(object sender, EventArgs e)
+    {
+        if (!int.TryParse(txtMin.Text, out var min))
+        {
+            SetDefaultValue(txtMin, DefaultMin);
+            min = DefaultMin;
+        }
+
+        if (!int.TryParse(txtMax.Text, out var max))
+        {
+            SetDefaultValue(txtMax, DefaultMax);
+            max = DefaultMax;
+        }
+
+        _game = new NumbersLib(min, max);
+        SetRangeFieldsEnabled(false);
+        DisplayRangeDetails();
     }
 
     private void DisplayRangeDetails()
@@ -106,22 +128,43 @@ public partial class Form1 : Form
         lblResult.Visible = true;
     }
 
+    private void SetDefaultValue(TextBox t, int value)
+    {
+        t.Text = value.ToString();
+    }
+
     private void setPlayQuitButtonVisibility(bool isVisible)
     {
         btnPlayAgain.Visible = isVisible;
         btnQuit.Visible      = isVisible;
     }
 
+    private void SetRangeFieldsEnabled(bool isEnabled)
+    {
+        txtMax.Enabled = isEnabled;
+        txtMin.Enabled = isEnabled;
+    }
+
     private void SetupGame()
     {
-        _game = new NumbersLib();
-        DisplayRangeDetails();
+        SetDefaultValue(txtMax, DefaultMax);
+        SetDefaultValue(txtMin, DefaultMin);
+
         lblResult.Visible     = false;
         lblWinBanner.Visible  = false;
         lblGuessCount.Visible = false;
         txtGuess.Text         = string.Empty;
+        btnForfeit.Enabled    = false;
         setPlayQuitButtonVisibility(false);
-        btnForfeit.Enabled = false;
+        SetRangeFieldsEnabled(true);
+    }
+
+    private void txtValue_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+        {
+            e.Handled = true;
+        }
     }
 
     private void updateForfeitButton()
