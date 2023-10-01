@@ -3,8 +3,10 @@
 public class NumbersLib
 {
     #region Constants
-    public const int DefaultMax = 100;
-    public const int DefaultMin = 1;
+    public const  int DefaultMax = 100;
+    public const  int DefaultMin = 1;
+    private const int HardMax    = 1000000;
+    private const int MediumMax  = 1000;
     #endregion
 
     #region Constructors
@@ -33,6 +35,18 @@ public class NumbersLib
     public int ThresholdHigh {get; private set;}
     public int ThresholdLow  {get; private set;}
     #endregion
+
+    public static NumbersLib NewGame(Difficulty difficulty)
+    {
+        return difficulty switch
+        {
+            Difficulty.Easy   => new NumbersLib(DefaultMin, DefaultMax),
+            Difficulty.Medium => new NumbersLib(DefaultMin, MediumMax),
+            Difficulty.Hard   => new NumbersLib(DefaultMin, HardMax),
+            Difficulty.Expert => new NumbersLib(DefaultMin, int.MaxValue - 1),
+            _                 => throw new ArgumentOutOfRangeException(nameof(difficulty), difficulty, null)
+        };
+    }
 
     public GuessResult MakeGuess(string guess)
     {
