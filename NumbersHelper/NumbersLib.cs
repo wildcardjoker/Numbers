@@ -2,29 +2,37 @@
 
 public class NumbersLib
 {
-    public NumbersLib() : this(1, 100)
-    {
-    }
+    #region Constants
+    public const int DefaultMax = 100;
+    public const int DefaultMin = 1;
+    #endregion
+
+    #region Constructors
+    public NumbersLib() : this(DefaultMin, DefaultMax) {}
 
     public NumbersLib(int minimum, int maximum)
     {
         MinimumNumber = minimum;
         MaximumNumber = maximum;
         ThresholdHigh = MaximumNumber;
-        ThresholdLow = MinimumNumber;
+        ThresholdLow  = MinimumNumber;
         var rnd = new Random();
         SecretNumber = rnd.Next(MinimumNumber, MaximumNumber + 1);
     }
+    #endregion
 
-    public int SecretNumber { get; }
-    public int CurrentGuess { get; private set; }
-    public int MinimumNumber { get; }
-    public int MaximumNumber { get; }
-    public int ThresholdLow { get; private set; }
-    public int ThresholdHigh { get; private set; }
-    public int NumberOfGuesses { get; private set; }
-    public bool CorrectGuess { get; private set; }
-    public bool Forfeit { get; private set; }
+    #region Properties
+    public bool CorrectGuess    {get; private set;}
+    public int  CurrentGuess    {get; private set;}
+    public bool Forfeit         {get; private set;}
+    public int  MaximumNumber   {get;}
+    public int  MinimumNumber   {get;}
+    public int  NumberOfGuesses {get; private set;}
+
+    public int SecretNumber  {get;}
+    public int ThresholdHigh {get; private set;}
+    public int ThresholdLow  {get; private set;}
+    #endregion
 
     public GuessResult MakeGuess(string guess)
     {
@@ -64,9 +72,15 @@ public class NumbersLib
             return GuessResult.CorrectGuess;
         }
 
-        if (CurrentGuess < ThresholdLow) return GuessResult.PreviousGuessLower;
+        if (CurrentGuess < ThresholdLow)
+        {
+            return GuessResult.PreviousGuessLower;
+        }
 
-        if (CurrentGuess > ThresholdHigh) return GuessResult.PreviousGuessHigher;
+        if (CurrentGuess > ThresholdHigh)
+        {
+            return GuessResult.PreviousGuessHigher;
+        }
 
         if (CurrentGuess < SecretNumber)
         {
