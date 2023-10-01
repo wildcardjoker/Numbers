@@ -22,11 +22,25 @@ internal class Program
         Console.WriteLineFormatted(CountMessage,   Color.Aqua,           Color.Gray,      game.NumberOfGuesses);
     }
 
+    private static int GetRangeValue(bool minValue)
+    {
+        Console.Write($"Please enter the {(minValue ? "lowest" : "highest")} number in the range, equal to or greater than {(minValue ? "1" : int.MaxValue - 1)}: ");
+        var response = Console.ReadLine();
+        if (!int.TryParse(response, out var rangeResult) || rangeResult <= 0)
+        {
+            rangeResult = minValue ? NumbersLib.DefaultMin : NumbersLib.DefaultMax;
+        }
+
+        return rangeResult;
+    }
+
     private static void Main(string[] args)
     {
-        var game = new NumbersLib();
         Console.WriteAscii("Guess the number", Color.Coral);
         Console.WriteLine("Shall we play a game?");
+        var minResult = GetRangeValue(true);
+        var maxResult = GetRangeValue(false);
+        var game      = new NumbersLib(minResult, maxResult);
         Console.WriteLine($"I'm thinking of a number between {game.MinimumNumber} and {game.MaximumNumber}. Try and guess it!");
         Console.WriteLine("If you want to quit, just press 0.");
         Console.WriteLine();
