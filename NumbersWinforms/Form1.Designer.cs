@@ -44,7 +44,7 @@
             txtMax = new TextBox();
             label3 = new Label();
             label4 = new Label();
-            button1 = new Button();
+            btnStartGame = new Button();
             SuspendLayout();
             // 
             // lblRange
@@ -184,22 +184,22 @@
             label4.TabIndex = 14;
             label4.Text = "and";
             // 
-            // button1
+            // btnStartGame
             // 
-            button1.Location = new Point(305, 26);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 15;
-            button1.Text = "Go!";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnStartGame.Location = new Point(305, 26);
+            btnStartGame.Name = "btnStartGame";
+            btnStartGame.Size = new Size(75, 23);
+            btnStartGame.TabIndex = 15;
+            btnStartGame.Text = "Go!";
+            btnStartGame.UseVisualStyleBackColor = true;
+            btnStartGame.Click += btnStartGame_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(420, 178);
-            Controls.Add(button1);
+            Controls.Add(btnStartGame);
             Controls.Add(label4);
             Controls.Add(label3);
             Controls.Add(txtMax);
@@ -239,6 +239,6 @@
         private TextBox txtMax;
         private Label label3;
         private Label label4;
-        private Button button1;
+        private Button btnStartGame;
     }
 }

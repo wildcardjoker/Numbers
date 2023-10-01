@@ -48,7 +48,7 @@ public partial class Form1 : Form
         Close();
     }
 
-    private void button1_Click(object sender, EventArgs e)
+    private void btnStartGame_Click(object sender, EventArgs e)
     {
         if (!int.TryParse(txtMin.Text, out var min))
         {
