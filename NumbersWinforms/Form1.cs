@@ -26,6 +26,11 @@ public partial class Form1 : Form
     }
     #endregion
 
+    private static void SetDefaultValue(TextBox t, int value)
+    {
+        t.Text = value.ToString();
+    }
+
     private void btnForfeit_Click(object sender, EventArgs e)
     {
         txtGuess.Text = "0";
@@ -35,7 +40,7 @@ public partial class Form1 : Form
     private void btnGuess_Click(object sender, EventArgs e)
     {
         MakeGuess();
-        updateForfeitButton();
+        UpdateForfeitButton();
     }
 
     private void btnPlayAgain_Click(object sender, EventArgs e)
@@ -79,7 +84,7 @@ public partial class Form1 : Form
         lblResult.Visible     = false;
         lblGuessCount.Visible = true;
         lblWinBanner.Visible  = true;
-        setPlayQuitButtonVisibility(true);
+        SetPlayQuitButtonVisibility(true);
     }
 
     private void MakeGuess()
@@ -108,7 +113,7 @@ public partial class Form1 : Form
                 break;
             case GuessResult.Forfeit:
                 resultMessage = $"You forfeit. {_game.SecretNumber} was the right answer!";
-                setPlayQuitButtonVisibility(true);
+                SetPlayQuitButtonVisibility(true);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -128,12 +133,7 @@ public partial class Form1 : Form
         lblResult.Visible = true;
     }
 
-    private void SetDefaultValue(TextBox t, int value)
-    {
-        t.Text = value.ToString();
-    }
-
-    private void setPlayQuitButtonVisibility(bool isVisible)
+    private void SetPlayQuitButtonVisibility(bool isVisible)
     {
         btnPlayAgain.Visible = isVisible;
         btnQuit.Visible      = isVisible;
@@ -149,13 +149,12 @@ public partial class Form1 : Form
     {
         SetDefaultValue(txtMax, DefaultMax);
         SetDefaultValue(txtMin, DefaultMin);
-
         lblResult.Visible     = false;
         lblWinBanner.Visible  = false;
         lblGuessCount.Visible = false;
         txtGuess.Text         = string.Empty;
         btnForfeit.Enabled    = false;
-        setPlayQuitButtonVisibility(false);
+        SetPlayQuitButtonVisibility(false);
         SetRangeFieldsEnabled(true);
     }
 
@@ -167,7 +166,7 @@ public partial class Form1 : Form
         }
     }
 
-    private void updateForfeitButton()
+    private void UpdateForfeitButton()
     {
         if (_game.NumberOfGuesses > 0)
         {
