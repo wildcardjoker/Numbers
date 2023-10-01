@@ -45,12 +45,16 @@
             label3 = new Label();
             label4 = new Label();
             btnStartGame = new Button();
+            cboDifficulty = new ComboBox();
+            label5 = new Label();
+            panelCustomGame = new Panel();
+            panelCustomGame.SuspendLayout();
             SuspendLayout();
             // 
             // lblRange
             // 
             lblRange.AutoSize = true;
-            lblRange.Location = new Point(12, 56);
+            lblRange.Location = new Point(12, 91);
             lblRange.Name = "lblRange";
             lblRange.Size = new Size(104, 15);
             lblRange.TabIndex = 0;
@@ -68,7 +72,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 81);
+            label1.Location = new Point(12, 116);
             label1.Name = "label1";
             label1.Size = new Size(70, 15);
             label1.TabIndex = 2;
@@ -76,14 +80,14 @@
             // 
             // txtGuess
             // 
-            txtGuess.Location = new Point(152, 78);
+            txtGuess.Location = new Point(152, 113);
             txtGuess.Name = "txtGuess";
             txtGuess.Size = new Size(47, 23);
             txtGuess.TabIndex = 3;
             // 
             // btnGuess
             // 
-            btnGuess.Location = new Point(224, 78);
+            btnGuess.Location = new Point(224, 113);
             btnGuess.Name = "btnGuess";
             btnGuess.Size = new Size(75, 23);
             btnGuess.TabIndex = 4;
@@ -95,7 +99,7 @@
             // 
             lblWinBanner.AutoSize = true;
             lblWinBanner.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            lblWinBanner.Location = new Point(12, 108);
+            lblWinBanner.Location = new Point(12, 143);
             lblWinBanner.Name = "lblWinBanner";
             lblWinBanner.Size = new Size(321, 21);
             lblWinBanner.TabIndex = 5;
@@ -104,7 +108,7 @@
             // lblGuessCount
             // 
             lblGuessCount.AutoSize = true;
-            lblGuessCount.Location = new Point(12, 129);
+            lblGuessCount.Location = new Point(12, 164);
             lblGuessCount.Name = "lblGuessCount";
             lblGuessCount.Size = new Size(74, 15);
             lblGuessCount.TabIndex = 6;
@@ -113,7 +117,7 @@
             // lblResult
             // 
             lblResult.AutoSize = true;
-            lblResult.Location = new Point(12, 108);
+            lblResult.Location = new Point(12, 143);
             lblResult.Name = "lblResult";
             lblResult.Size = new Size(73, 15);
             lblResult.TabIndex = 7;
@@ -122,7 +126,7 @@
             // 
             // btnForfeit
             // 
-            btnForfeit.Location = new Point(305, 77);
+            btnForfeit.Location = new Point(305, 112);
             btnForfeit.Name = "btnForfeit";
             btnForfeit.Size = new Size(75, 23);
             btnForfeit.TabIndex = 8;
@@ -132,7 +136,7 @@
             // 
             // btnPlayAgain
             // 
-            btnPlayAgain.Location = new Point(12, 147);
+            btnPlayAgain.Location = new Point(12, 182);
             btnPlayAgain.Name = "btnPlayAgain";
             btnPlayAgain.Size = new Size(75, 23);
             btnPlayAgain.TabIndex = 9;
@@ -142,7 +146,7 @@
             // 
             // btnQuit
             // 
-            btnQuit.Location = new Point(93, 147);
+            btnQuit.Location = new Point(93, 182);
             btnQuit.Name = "btnQuit";
             btnQuit.Size = new Size(75, 23);
             btnQuit.TabIndex = 10;
@@ -152,7 +156,7 @@
             // 
             // txtMin
             // 
-            txtMin.Location = new Point(152, 27);
+            txtMin.Location = new Point(62, 3);
             txtMin.Name = "txtMin";
             txtMin.Size = new Size(54, 23);
             txtMin.TabIndex = 11;
@@ -160,7 +164,7 @@
             // 
             // txtMax
             // 
-            txtMax.Location = new Point(245, 27);
+            txtMax.Location = new Point(155, 3);
             txtMax.Name = "txtMax";
             txtMax.Size = new Size(54, 23);
             txtMax.TabIndex = 12;
@@ -169,16 +173,16 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 30);
+            label3.Location = new Point(4, 6);
             label3.Name = "label3";
-            label3.Size = new Size(134, 15);
+            label3.Size = new Size(52, 15);
             label3.TabIndex = 13;
-            label3.Text = "I want to guess between";
+            label3.Text = "Between";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(212, 30);
+            label4.Location = new Point(122, 6);
             label4.Name = "label4";
             label4.Size = new Size(27, 15);
             label4.TabIndex = 14;
@@ -186,7 +190,7 @@
             // 
             // btnStartGame
             // 
-            btnStartGame.Location = new Point(305, 26);
+            btnStartGame.Location = new Point(305, 58);
             btnStartGame.Name = "btnStartGame";
             btnStartGame.Size = new Size(75, 23);
             btnStartGame.TabIndex = 15;
@@ -194,16 +198,44 @@
             btnStartGame.UseVisualStyleBackColor = true;
             btnStartGame.Click += btnStartGame_Click;
             // 
+            // cboDifficulty
+            // 
+            cboDifficulty.FormattingEnabled = true;
+            cboDifficulty.Location = new Point(73, 27);
+            cboDifficulty.Name = "cboDifficulty";
+            cboDifficulty.Size = new Size(121, 23);
+            cboDifficulty.TabIndex = 16;
+            cboDifficulty.SelectedIndexChanged += cboDifficulty_SelectedIndexChanged;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(12, 30);
+            label5.Name = "label5";
+            label5.Size = new Size(55, 15);
+            label5.TabIndex = 17;
+            label5.Text = "Difficulty";
+            // 
+            // panelCustomGame
+            // 
+            panelCustomGame.Controls.Add(label3);
+            panelCustomGame.Controls.Add(txtMin);
+            panelCustomGame.Controls.Add(label4);
+            panelCustomGame.Controls.Add(txtMax);
+            panelCustomGame.Location = new Point(12, 56);
+            panelCustomGame.Name = "panelCustomGame";
+            panelCustomGame.Size = new Size(225, 32);
+            panelCustomGame.TabIndex = 18;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(420, 178);
+            ClientSize = new Size(420, 214);
+            Controls.Add(panelCustomGame);
+            Controls.Add(label5);
+            Controls.Add(cboDifficulty);
             Controls.Add(btnStartGame);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(txtMax);
-            Controls.Add(txtMin);
             Controls.Add(btnQuit);
             Controls.Add(btnPlayAgain);
             Controls.Add(btnForfeit);
@@ -218,6 +250,9 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Guess the number";
+            Load += Form1_Load;
+            panelCustomGame.ResumeLayout(false);
+            panelCustomGame.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -240,5 +275,8 @@
         private Label label3;
         private Label label4;
         private Button btnStartGame;
+        private ComboBox cboDifficulty;
+        private Label label5;
+        private Panel panelCustomGame;
     }
 }
