@@ -1,5 +1,9 @@
 ﻿namespace NumbersHelper;
 
+#region Using Directives
+using Humanizer;
+#endregion
+
 public class NumbersLib
 {
     #region Constants
@@ -55,6 +59,8 @@ public class NumbersLib
             _                 => throw new ArgumentOutOfRangeException(nameof(difficulty), difficulty, null)
         };
     }
+
+    public string GetRemainingGuessesBeforeForfeit() => "guess".ToQuantity(GuessesBeforeForfeit);
 
     public GuessResult MakeGuess(string guess)
     {
