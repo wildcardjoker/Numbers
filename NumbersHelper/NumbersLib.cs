@@ -3,33 +3,41 @@
 public class NumbersLib
 {
     #region Constants
-    public const  int DefaultMax = 100;
-    public const  int DefaultMin = 1;
-    private const int HardMax    = 1000000;
-    private const int MediumMax  = 1000;
+    public const  int DefaultForfeitThreshold = 3;
+    public const  int DefaultMax              = 100;
+    public const  int DefaultMin              = 1;
+    public const  int ExpertForfeitThreshold  = 20;
+    public const  int HardForfeitThreshold    = 10;
+    public const  int MediumForfeitThreshold  = 5;
+    private const int HardMax                 = 1000000;
+    private const int MediumMax               = 1000;
     #endregion
 
     #region Constructors
-    public NumbersLib() : this(DefaultMin, DefaultMax) {}
+    public NumbersLib() : this(DefaultMin, DefaultMax, DefaultForfeitThreshold) {}
 
-    public NumbersLib(int minimum, int maximum)
+    public NumbersLib(int minimum, int maximum, int forfeitThreshold)
     {
-        MinimumNumber = minimum;
-        MaximumNumber = maximum;
-        ThresholdHigh = MaximumNumber;
-        ThresholdLow  = MinimumNumber;
+        MinimumNumber    = minimum;
+        MaximumNumber    = maximum;
+        ThresholdHigh    = MaximumNumber;
+        ThresholdLow     = MinimumNumber;
+        ForfeitThreshold = forfeitThreshold;
         var rnd = new Random();
         SecretNumber = rnd.Next(MinimumNumber, MaximumNumber + 1);
     }
     #endregion
 
     #region Properties
-    public bool CorrectGuess    {get; private set;}
-    public int  CurrentGuess    {get; private set;}
-    public bool Forfeit         {get; private set;}
-    public int  MaximumNumber   {get;}
-    public int  MinimumNumber   {get;}
-    public int  NumberOfGuesses {get; private set;}
+    public bool CanForfeit           => NumberOfGuesses >= ForfeitThreshold;
+    public bool CorrectGuess         {get; private set;}
+    public int  CurrentGuess         {get; private set;}
+    public bool Forfeit              {get; private set;}
+    public int  ForfeitThreshold     {get;}
+    public int  GuessesBeforeForfeit => ForfeitThreshold - NumberOfGuesses;
+    public int  MaximumNumber        {get;}
+    public int  MinimumNumber        {get;}
+    public int  NumberOfGuesses      {get; private set;}
 
     public int SecretNumber  {get;}
     public int ThresholdHigh {get; private set;}
@@ -40,10 +48,10 @@ public class NumbersLib
     {
         return difficulty switch
         {
-            Difficulty.Easy   => new NumbersLib(DefaultMin, DefaultMax),
-            Difficulty.Medium => new NumbersLib(DefaultMin, MediumMax),
-            Difficulty.Hard   => new NumbersLib(DefaultMin, HardMax),
-            Difficulty.Expert => new NumbersLib(DefaultMin, int.MaxValue - 1),
+            Difficulty.Easy   => new NumbersLib(DefaultMin, DefaultMax,       DefaultForfeitThreshold),
+            Difficulty.Medium => new NumbersLib(DefaultMin, MediumMax,        MediumForfeitThreshold),
+            Difficulty.Hard   => new NumbersLib(DefaultMin, HardMax,          HardForfeitThreshold),
+            Difficulty.Expert => new NumbersLib(DefaultMin, int.MaxValue - 1, ExpertForfeitThreshold),
             _                 => throw new ArgumentOutOfRangeException(nameof(difficulty), difficulty, null)
         };
     }
@@ -71,15 +79,20 @@ public class NumbersLib
     /// </remarks>
     public GuessResult MakeGuess(int guess)
     {
-        NumberOfGuesses++;
         CurrentGuess = guess;
 
         if (guess == 0)
         {
+            if (!CanForfeit)
+            {
+                return GuessResult.Higher;
+            }
+
             Forfeit = true;
             return GuessResult.Forfeit;
         }
 
+        NumberOfGuesses++;
         if (CurrentGuess == SecretNumber)
         {
             CorrectGuess = true;
