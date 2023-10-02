@@ -4,6 +4,7 @@
 using System;
 using System.Drawing;
 using System.Linq;
+using Humanizer;
 using NumbersHelper;
 #endregion
 
@@ -39,7 +40,7 @@ internal class Program
 
         var minResult = GetRangeValue(true);
         var maxResult = GetRangeValue(false);
-        return new NumbersLib(minResult, maxResult);
+        return new NumbersLib(minResult, maxResult, NumbersLib.DefaultForfeitThreshold);
     }
 
     private static void DisplayWinnerMessage(NumbersLib game)
@@ -62,13 +63,15 @@ internal class Program
         return rangeResult;
     }
 
+    private static string GetRemainingGuessesBeforeForfeit(NumbersLib game) => "guess".ToQuantity(game.GuessesBeforeForfeit);
+
     private static void Main(string[] args)
     {
         Colorful.Console.WriteAscii("Guess the number", Color.Coral);
         Colorful.Console.WriteLine("Shall we play a game?");
         var game = DisplayMenu();
         Colorful.Console.WriteLine($"I'm thinking of a number between {game.MinimumNumber} and {game.MaximumNumber}. Try and guess it!");
-        Colorful.Console.WriteLine("If you want to quit, just press 0.");
+        Colorful.Console.WriteLine($"You can forfeit the game by entering 0 after {GetRemainingGuessesBeforeForfeit(game)}.");
         Colorful.Console.WriteLine();
 
         while (!game.CorrectGuess && !game.Forfeit)
@@ -111,5 +114,7 @@ internal class Program
     private static void RequestGuessWithinCurrentRange(NumbersLib game)
     {
         Colorful.Console.WriteLineFormatted(RangeMessage, Color.Fuchsia, Color.Gainsboro, game.ThresholdLow, game.ThresholdHigh);
+        Console.WriteLine(
+            game.CanForfeit ? "You can forfeit the game by entering 0." : $"You have {GetRemainingGuessesBeforeForfeit(game)} remaining before you can forfeit.");
     }
 }
