@@ -111,12 +111,11 @@
             // lblGuessCount
             // 
             lblGuessCount.AutoSize = true;
-            lblGuessCount.Location = new Point(12, 164);
+            lblGuessCount.Location = new Point(16, 173);
             lblGuessCount.Name = "lblGuessCount";
             lblGuessCount.Size = new Size(74, 15);
             lblGuessCount.TabIndex = 6;
             lblGuessCount.Text = "Guess Count";
-            lblGuessCount.Visible = false;
             // 
             // lblResult
             // 
@@ -141,9 +140,9 @@
             // 
             // btnPlayAgain
             // 
-            btnPlayAgain.Location = new Point(12, 182);
+            btnPlayAgain.Location = new Point(15, 191);
             btnPlayAgain.Name = "btnPlayAgain";
-            btnPlayAgain.Size = new Size(75, 23);
+            btnPlayAgain.Size = new Size(75, 28);
             btnPlayAgain.TabIndex = 9;
             btnPlayAgain.Text = "Play again";
             btnPlayAgain.UseVisualStyleBackColor = true;
@@ -151,9 +150,9 @@
             // 
             // btnQuit
             // 
-            btnQuit.Location = new Point(93, 182);
+            btnQuit.Location = new Point(96, 191);
             btnQuit.Name = "btnQuit";
-            btnQuit.Size = new Size(75, 23);
+            btnQuit.Size = new Size(75, 28);
             btnQuit.TabIndex = 10;
             btnQuit.Text = "Quit";
             btnQuit.UseVisualStyleBackColor = true;
@@ -247,7 +246,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(420, 214);
+            ClientSize = new Size(420, 228);
             Controls.Add(panelGuess);
             Controls.Add(panelCustomGame);
             Controls.Add(label5);

@@ -96,11 +96,10 @@ public partial class Form1 : Form
 
     private void DisplayWinBanner()
     {
-        lblWinBanner.Text     = $"Congratulations! {_game.SecretNumber} is the right answer!";
-        lblGuessCount.Text    = $"It took you {"guess".ToQuantity(_game.NumberOfGuesses)} to win. Great game!";
-        lblResult.Visible     = false;
-        lblGuessCount.Visible = true;
-        lblWinBanner.Visible  = true;
+        lblWinBanner.Text    = $"Congratulations! {_game.SecretNumber} is the right answer!";
+        lblGuessCount.Text   = $"It took you {"guess".ToQuantity(_game.NumberOfGuesses)} to win. Great game!";
+        lblResult.Visible    = false;
+        lblWinBanner.Visible = true;
         SetPlayQuitButtonVisibility(true);
     }
 
@@ -201,13 +200,15 @@ public partial class Form1 : Form
 
     private void UpdateForfeitButton()
     {
-        btnForfeit.Visible    = _game.CanForfeit;
-        lblGuessCount.Visible = !_game.CanForfeit;
+        btnForfeit.Visible = _game.CanForfeit;
         UpdateForfeitText();
     }
 
     private void UpdateForfeitText()
     {
-        lblGuessCount.Text = _game.CanForfeit ? "Give up" : $"Can give up in {_game.GetRemainingGuessesBeforeForfeit()}";
+        if (!_game.CorrectGuess)
+        {
+            lblGuessCount.Text = _game.CanForfeit ? string.Empty : $"Can give up in {_game.GetRemainingGuessesBeforeForfeit()}";
+        }
     }
 }
