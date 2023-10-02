@@ -55,26 +55,41 @@ public partial class Form1 : Form
 
     private void btnStartGame_Click(object sender, EventArgs e)
     {
-        if (!int.TryParse(txtMin.Text, out var min))
+        var selectedDifficulty = (Difficulty) cboDifficulty.SelectedItem;
+        if (selectedDifficulty == Difficulty.Custom)
         {
-            SetDefaultValue(txtMin, DefaultMin);
-            min = DefaultMin;
+            if (!int.TryParse(txtMin.Text, out var min))
+            {
+                SetDefaultValue(txtMin, DefaultMin);
+                min = DefaultMin;
+            }
+
+            if (!int.TryParse(txtMax.Text, out var max))
+            {
+                SetDefaultValue(txtMax, DefaultMax);
+                max = DefaultMax;
+            }
+
+            _game = new NumbersLib(min, max);
+        }
+        else
+        {
+            _game = NumbersLib.NewGame(selectedDifficulty);
         }
 
-        if (!int.TryParse(txtMax.Text, out var max))
-        {
-            SetDefaultValue(txtMax, DefaultMax);
-            max = DefaultMax;
-        }
-
-        _game = new NumbersLib(min, max);
         SetRangeFieldsEnabled(false);
         DisplayRangeDetails();
     }
 
+    private void cboDifficulty_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        panelCustomGame.Visible = (Difficulty) cboDifficulty.SelectedItem == Difficulty.Custom;
+    }
+
     private void DisplayRangeDetails()
     {
-        lblRange.Text = $"Please guess a number between {_game.ThresholdLow} and {_game.ThresholdHigh}";
+        lblRange.Visible = true;
+        lblRange.Text    = $"Please guess a number between {_game.ThresholdLow} and {_game.ThresholdHigh}";
     }
 
     private void DisplayWinBanner()
@@ -85,6 +100,17 @@ public partial class Form1 : Form
         lblGuessCount.Visible = true;
         lblWinBanner.Visible  = true;
         SetPlayQuitButtonVisibility(true);
+    }
+
+    private void Form1_Load(object sender, EventArgs e)
+    {
+        var options = Enum.GetValues(typeof(Difficulty));
+        foreach (var option in options)
+        {
+            cboDifficulty.Items.Add(option);
+        }
+
+        panelCustomGame.Visible = false;
     }
 
     private void MakeGuess()
@@ -141,8 +167,10 @@ public partial class Form1 : Form
 
     private void SetRangeFieldsEnabled(bool isEnabled)
     {
-        txtMax.Enabled = isEnabled;
-        txtMin.Enabled = isEnabled;
+        txtMax.Enabled        = isEnabled;
+        txtMin.Enabled        = isEnabled;
+        btnStartGame.Enabled  = isEnabled;
+        cboDifficulty.Enabled = isEnabled;
     }
 
     private void SetupGame()
