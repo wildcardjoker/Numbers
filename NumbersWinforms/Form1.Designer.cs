@@ -114,6 +114,7 @@
             lblGuessCount.Size = new Size(74, 15);
             lblGuessCount.TabIndex = 6;
             lblGuessCount.Text = "Guess Count";
+            lblGuessCount.Visible = false;
             // 
             // lblResult
             // 
@@ -133,6 +134,7 @@
             btnForfeit.TabIndex = 8;
             btnForfeit.Text = "Give Up";
             btnForfeit.UseVisualStyleBackColor = true;
+            btnForfeit.Visible = false;
             btnForfeit.Click += btnForfeit_Click;
             // 
             // btnPlayAgain
