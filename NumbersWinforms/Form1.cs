@@ -77,6 +77,7 @@ public partial class Form1 : Form
             _game = NumbersLib.NewGame(selectedDifficulty);
         }
 
+        panelGuess.Visible = true;
         UpdateForfeitButton();
         SetRangeFieldsEnabled(false);
         DisplayRangeDetails();
@@ -184,6 +185,7 @@ public partial class Form1 : Form
         lblResult.Visible       = false;
         lblWinBanner.Visible    = false;
         panelCustomGame.Visible = false;
+        panelGuess.Visible      = false;
         txtGuess.Text           = string.Empty;
         SetPlayQuitButtonVisibility(false);
         SetRangeFieldsEnabled(true);
