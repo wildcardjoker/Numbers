@@ -48,7 +48,9 @@
             cboDifficulty = new ComboBox();
             label5 = new Label();
             panelCustomGame = new Panel();
+            panelGuess = new Panel();
             panelCustomGame.SuspendLayout();
+            panelGuess.SuspendLayout();
             SuspendLayout();
             // 
             // lblRange
@@ -73,7 +75,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(12, 116);
+            label1.Location = new Point(0, 8);
             label1.Name = "label1";
             label1.Size = new Size(70, 15);
             label1.TabIndex = 2;
@@ -81,14 +83,14 @@
             // 
             // txtGuess
             // 
-            txtGuess.Location = new Point(152, 113);
+            txtGuess.Location = new Point(76, 3);
             txtGuess.Name = "txtGuess";
             txtGuess.Size = new Size(47, 23);
             txtGuess.TabIndex = 3;
             // 
             // btnGuess
             // 
-            btnGuess.Location = new Point(224, 113);
+            btnGuess.Location = new Point(129, 4);
             btnGuess.Name = "btnGuess";
             btnGuess.Size = new Size(75, 23);
             btnGuess.TabIndex = 4;
@@ -114,6 +116,7 @@
             lblGuessCount.Size = new Size(74, 15);
             lblGuessCount.TabIndex = 6;
             lblGuessCount.Text = "Guess Count";
+            lblGuessCount.Visible = false;
             // 
             // lblResult
             // 
@@ -127,12 +130,13 @@
             // 
             // btnForfeit
             // 
-            btnForfeit.Location = new Point(305, 112);
+            btnForfeit.Location = new Point(210, 4);
             btnForfeit.Name = "btnForfeit";
             btnForfeit.Size = new Size(75, 23);
             btnForfeit.TabIndex = 8;
             btnForfeit.Text = "Give Up";
             btnForfeit.UseVisualStyleBackColor = true;
+            btnForfeit.Visible = false;
             btnForfeit.Click += btnForfeit_Click;
             // 
             // btnPlayAgain
@@ -228,24 +232,32 @@
             panelCustomGame.Size = new Size(225, 32);
             panelCustomGame.TabIndex = 18;
             // 
+            // panelGuess
+            // 
+            panelGuess.Controls.Add(label1);
+            panelGuess.Controls.Add(txtGuess);
+            panelGuess.Controls.Add(btnGuess);
+            panelGuess.Controls.Add(btnForfeit);
+            panelGuess.Location = new Point(12, 109);
+            panelGuess.Name = "panelGuess";
+            panelGuess.Size = new Size(291, 33);
+            panelGuess.TabIndex = 19;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(420, 214);
+            Controls.Add(panelGuess);
             Controls.Add(panelCustomGame);
             Controls.Add(label5);
             Controls.Add(cboDifficulty);
             Controls.Add(btnStartGame);
             Controls.Add(btnQuit);
             Controls.Add(btnPlayAgain);
-            Controls.Add(btnForfeit);
             Controls.Add(lblResult);
             Controls.Add(lblGuessCount);
             Controls.Add(lblWinBanner);
-            Controls.Add(btnGuess);
-            Controls.Add(txtGuess);
-            Controls.Add(label1);
             Controls.Add(label2);
             Controls.Add(lblRange);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -254,6 +266,8 @@
             Load += Form1_Load;
             panelCustomGame.ResumeLayout(false);
             panelCustomGame.PerformLayout();
+            panelGuess.ResumeLayout(false);
+            panelGuess.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -279,5 +293,6 @@
         private ComboBox cboDifficulty;
         private Label label5;
         private Panel panelCustomGame;
+        private Panel panelGuess;
     }
 }

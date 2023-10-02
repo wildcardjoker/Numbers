@@ -70,13 +70,15 @@ public partial class Form1 : Form
                 max = DefaultMax;
             }
 
-            _game = new NumbersLib(min, max);
+            _game = new NumbersLib(min, max, NumbersLib.DefaultForfeitThreshold);
         }
         else
         {
             _game = NumbersLib.NewGame(selectedDifficulty);
         }
 
+        panelGuess.Visible = true;
+        UpdateForfeitButton();
         SetRangeFieldsEnabled(false);
         DisplayRangeDetails();
     }
@@ -177,11 +179,14 @@ public partial class Form1 : Form
     {
         SetDefaultValue(txtMax, DefaultMax);
         SetDefaultValue(txtMin, DefaultMin);
-        lblResult.Visible     = false;
-        lblWinBanner.Visible  = false;
-        lblGuessCount.Visible = false;
-        txtGuess.Text         = string.Empty;
-        btnForfeit.Enabled    = false;
+        btnStartGame.Enabled    = true;
+        cboDifficulty.Enabled   = true;
+        lblRange.Visible        = false;
+        lblResult.Visible       = false;
+        lblWinBanner.Visible    = false;
+        panelCustomGame.Visible = false;
+        panelGuess.Visible      = false;
+        txtGuess.Text           = string.Empty;
         SetPlayQuitButtonVisibility(false);
         SetRangeFieldsEnabled(true);
     }
@@ -196,9 +201,13 @@ public partial class Form1 : Form
 
     private void UpdateForfeitButton()
     {
-        if (_game.NumberOfGuesses > 0)
-        {
-            btnForfeit.Enabled = true;
-        }
+        btnForfeit.Visible    = _game.CanForfeit;
+        lblGuessCount.Visible = !_game.CanForfeit;
+        UpdateForfeitText();
+    }
+
+    private void UpdateForfeitText()
+    {
+        lblGuessCount.Text = _game.CanForfeit ? "Give up" : $"Can give up in {_game.GetRemainingGuessesBeforeForfeit()}";
     }
 }
