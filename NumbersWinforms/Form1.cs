@@ -158,6 +158,8 @@ public partial class Form1 : Form
         };
 
         lblResult.Visible = true;
+        txtGuess.Focus();
+        txtGuess.SelectAll();
     }
 
     private void SetPlayQuitButtonVisibility(bool isVisible)
